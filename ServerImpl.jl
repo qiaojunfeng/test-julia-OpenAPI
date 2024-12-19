@@ -8,7 +8,7 @@ const server = Ref{Any}(nothing)
 #   function upload_post(req::HTTP.Request, file::String)
 # The following is correct
 function upload_post(req::HTTP.Request, file::Vector{UInt8})
-    println(string(file))
+    println(String(file))
 end
 
 function run_server(port::Integer=8082)
