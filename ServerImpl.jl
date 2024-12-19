@@ -1,6 +1,9 @@
 module ServerImpl
 using HTTP
+# the old version, not working
 include("server/src/APIServer.jl")
+# the new one, works fine
+# include("server_new/src/APIServer.jl")
 
 const server = Ref{Any}(nothing)
 

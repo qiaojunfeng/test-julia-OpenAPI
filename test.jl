@@ -1,5 +1,8 @@
 using OpenAPI
+# the old version, not working
 include("client/src/APIClient.jl")
+# the new one, works fine
+# include("client_new/src/APIClient.jl")
 
 api = APIClient.DefaultApi(OpenAPI.Clients.Client("localhost:8082"))
 
