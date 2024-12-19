@@ -14,6 +14,10 @@ function upload_post(req::HTTP.Request, file::Vector{UInt8})
     println(String(file))
 end
 
+function download_get(req::HTTP.Request, path::String)
+    read(path)
+end
+
 function run_server(port::Integer=8082)
     try
         router = HTTP.Router()

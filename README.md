@@ -1,4 +1,6 @@
-# Minimal working example of using `OpenAPI.jl` to upload file
+# Minimal working example of using `OpenAPI.jl` for file transfer
+
+## Upload file
 
 The `openapi-generator 7.10.0` generated julia server/client code has wrong
 function type signature for OpenAPI file upload.
@@ -18,12 +20,22 @@ julia --project test.jl
 ```
 
 To test the new version, open `test.jl` and change line 3-5 to
-```
+```julia
 # include("client/src/APIClient.jl")
 # the new one, works fine
 include("client_new/src/APIClient.jl")
 ```
 and run again the client code by
 ```shell
+julia --project test.jl
+```
+
+## Download file
+
+In this case, the `openapi-generator` works fine.
+One only need a small change to `OpenAPI.jl`, to make the user experience more friendly, see <https://github.com/qiaojunfeng/OpenAPI.jl/tree/binary>.
+To see this, run in julia
+```shell
+julia --project -e 'using Pkg; Pkg.add(url="https://github.com/qiaojunfeng/OpenAPI.jl", rev="binary")'
 julia --project test.jl
 ```

@@ -21,3 +21,22 @@ paths:
       responses:
         '201':
           description: File upload successful
+  '/download':
+    get:
+      summary: Download a file
+      parameters:
+        - name: path
+          in: query
+          description: Absolute path to destination
+          schema:
+            type: string
+          allowReserved: true
+          required: true
+      responses:
+        '200':
+          description: Returns the file
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
