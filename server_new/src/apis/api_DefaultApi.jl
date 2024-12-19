@@ -2,6 +2,34 @@
 # Do not modify this file directly. Modify the OpenAPI specification instead.
 
 
+function download_get_read(handler)
+    function download_get_read_handler(req::HTTP.Request)
+        openapi_params = Dict{String,Any}()
+        query_params = HTTP.queryparams(URIs.URI(req.target))
+        openapi_params["path"] = OpenAPI.Servers.to_param(String, query_params, "path", required=true, style="form", is_explode=true)
+        req.context[:openapi_params] = openapi_params
+
+        return handler(req)
+    end
+end
+
+function download_get_validate(handler)
+    function download_get_validate_handler(req::HTTP.Request)
+        openapi_params = req.context[:openapi_params]
+        
+        return handler(req)
+    end
+end
+
+function download_get_invoke(impl; post_invoke=nothing)
+    function download_get_invoke_handler(req::HTTP.Request)
+        openapi_params = req.context[:openapi_params]
+        ret = impl.download_get(req::HTTP.Request, openapi_params["path"];)
+        resp = OpenAPI.Servers.server_response(ret)
+        return (post_invoke === nothing) ? resp : post_invoke(req, resp)
+    end
+end
+
 function upload_post_read(handler)
     function upload_post_read_handler(req::HTTP.Request)
         openapi_params = Dict{String,Any}()
@@ -33,6 +61,7 @@ end
 
 
 function registerDefaultApi(router::HTTP.Router, impl; path_prefix::String="", optional_middlewares...)
+    HTTP.register!(router, "GET", path_prefix * "/download", OpenAPI.Servers.middleware(impl, download_get_read, download_get_validate, download_get_invoke; optional_middlewares...))
     HTTP.register!(router, "POST", path_prefix * "/upload", OpenAPI.Servers.middleware(impl, upload_post_read, upload_post_validate, upload_post_invoke; optional_middlewares...))
     return router
 end

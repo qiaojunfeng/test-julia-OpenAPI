@@ -7,6 +7,9 @@ Encapsulates generated server code for APIServer
 
 The following server methods must be implemented:
 
+- **download_get**
+    - *invocation:* GET /download
+    - *signature:* download_get(req::HTTP.Request, path::String;) -> String
 - **upload_post**
     - *invocation:* POST /upload
     - *signature:* upload_post(req::HTTP.Request, file::String;) -> Nothing

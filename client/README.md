@@ -21,6 +21,7 @@ Documentation is also embedded in Julia which can be used with a Julia specific 
 
 Class | Method
 ------------ | -------------
+*DefaultApi* | [**download_get**](docs/DefaultApi.md#download_get)<br/>**GET** /download<br/>Download a file
 *DefaultApi* | [**upload_post**](docs/DefaultApi.md#upload_post)<br/>**POST** /upload<br/>Upload a file
 
 

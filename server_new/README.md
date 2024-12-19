@@ -42,6 +42,7 @@ The following server methods must be implemented:
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*DefaultApi* | [**download_get**](docs/DefaultApi.md#download_get) | **GET** /download | Download a file
 *DefaultApi* | [**upload_post**](docs/DefaultApi.md#upload_post) | **POST** /upload | Upload a file
 
 
