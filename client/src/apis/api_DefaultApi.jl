@@ -15,27 +15,28 @@ const _returntypes_upload_post_DefaultApi = Dict{Regex,Type}(
     Regex("^" * replace("201", "x"=>".") * "\$") => Nothing,
 )
 
-function _oacinternal_upload_post(_api::DefaultApi, body::Vector{UInt8}; _mediaType=nothing)
-    _ctx = OpenAPI.Clients.Ctx(_api.client, "POST", _returntypes_upload_post_DefaultApi, "/upload", [], body)
+function _oacinternal_upload_post(_api::DefaultApi, file::Vector{UInt8}; _mediaType=nothing)
+    _ctx = OpenAPI.Clients.Ctx(_api.client, "POST", _returntypes_upload_post_DefaultApi, "/upload", [])
+    OpenAPI.Clients.set_param(_ctx.file, "file", file)  # type Vector{UInt8}
     OpenAPI.Clients.set_header_accept(_ctx, [])
-    OpenAPI.Clients.set_header_content_type(_ctx, (_mediaType === nothing) ? ["application/octet-stream", ] : [_mediaType])
+    OpenAPI.Clients.set_header_content_type(_ctx, (_mediaType === nothing) ? ["multipart/form-data", ] : [_mediaType])
     return _ctx
 end
 
 @doc raw"""Upload a file
 
 Params:
-- body::String (required)
+- file::String (required)
 
 Return: Nothing, OpenAPI.Clients.ApiResponse
 """
-function upload_post(_api::DefaultApi, body::String; _mediaType=nothing)
-    _ctx = _oacinternal_upload_post(_api, body; _mediaType=_mediaType)
+function upload_post(_api::DefaultApi, file::String; _mediaType=nothing)
+    _ctx = _oacinternal_upload_post(_api, file; _mediaType=_mediaType)
     return OpenAPI.Clients.exec(_ctx)
 end
 
-function upload_post(_api::DefaultApi, response_stream::Channel, body::String; _mediaType=nothing)
-    _ctx = _oacinternal_upload_post(_api, body; _mediaType=_mediaType)
+function upload_post(_api::DefaultApi, response_stream::Channel, file::String; _mediaType=nothing)
+    _ctx = _oacinternal_upload_post(_api, file; _mediaType=_mediaType)
     return OpenAPI.Clients.exec(_ctx, response_stream)
 end
 

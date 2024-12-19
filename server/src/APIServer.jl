@@ -9,7 +9,7 @@ The following server methods must be implemented:
 
 - **upload_post**
     - *invocation:* POST /upload
-    - *signature:* upload_post(req::HTTP.Request, body::String;) -> Nothing
+    - *signature:* upload_post(req::HTTP.Request, file::String;) -> Nothing
 """
 module APIServer
 

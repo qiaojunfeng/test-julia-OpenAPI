@@ -8,7 +8,7 @@ Method | HTTP request | Description
 
 
 # **upload_post**
-> upload_post(req::HTTP.Request, body::String;) -> Nothing
+> upload_post(req::HTTP.Request, file::String;) -> Nothing
 
 Upload a file
 
@@ -17,7 +17,7 @@ Upload a file
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **req** | **HTTP.Request** | The HTTP Request object | 
-**body** | **String****String**|  | 
+**file** | **String****String**|  | [default to nothing]
 
 ### Return type
 
@@ -29,7 +29,7 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/octet-stream
+ - **Content-Type**: multipart/form-data
  - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

@@ -5,7 +5,9 @@
 function upload_post_read(handler)
     function upload_post_read_handler(req::HTTP.Request)
         openapi_params = Dict{String,Any}()
-        openapi_params["body"] = OpenAPI.Servers.to_param_type(String, String(req.body))
+        ismultipart = true
+        form_data = ismultipart ? HTTP.parse_multipart_form(req) : HTTP.queryparams(String(copy(req.body)))
+        openapi_params["file"] = OpenAPI.Servers.to_param(Vector{UInt8}, form_data, "file"; multipart=ismultipart, isfile=true, required=true, )
         req.context[:openapi_params] = openapi_params
 
         return handler(req)
@@ -23,7 +25,7 @@ end
 function upload_post_invoke(impl; post_invoke=nothing)
     function upload_post_invoke_handler(req::HTTP.Request)
         openapi_params = req.context[:openapi_params]
-        ret = impl.upload_post(req::HTTP.Request, openapi_params["body"];)
+        ret = impl.upload_post(req::HTTP.Request, openapi_params["file"];)
         resp = OpenAPI.Servers.server_response(ret)
         return (post_invoke === nothing) ? resp : post_invoke(req, resp)
     end
